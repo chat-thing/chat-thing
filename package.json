@@ -1,0 +1,20 @@
+{
+  "name": "chat-thing",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "web-frontend",
+    "electron"
+  ],
+  "scripts": {
+    "dev:web": "cd web-frontend && bun run dev",
+    "dev:electron": "cd electron && bun run dev",
+    "dev:backend": "cd backend && bun run dev",
+    "install:all": "bun install"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
+
