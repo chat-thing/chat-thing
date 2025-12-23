@@ -1,5 +1,5 @@
 import type { ServerWebSocket } from "bun";
-import { verifyAuthToken, type AuthContext } from "./auth/clerk";
+import { requireAuth, type AuthContext } from "./auth/requireAuth";
 import { db } from "./db/client";
 import { messages, users } from "./db/schema";
 import { eq } from "drizzle-orm";
