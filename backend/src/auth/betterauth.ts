@@ -19,10 +19,14 @@ export const auth = betterAuth({
 export async function getSessionFromHeaders(
 	headers: Headers,
 ): Promise<{ userId?: string } | null> {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const anyAuth = auth as any;
-	if (anyAuth?.api?.getSession) {
-		return anyAuth.api.getSession({ headers });
+	type BetterAuthApi = {
+		api?: {
+			getSession: (args: { headers: Headers }) => Promise<{ userId?: string } | null>;
+		};
+	};
+	const api = (auth as unknown as BetterAuthApi).api;
+	if (api?.getSession) {
+		return api.getSession({ headers });
 	}
 	return null;
 }

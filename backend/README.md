@@ -1,6 +1,6 @@
 # Backend
 
-Bun-based backend server with PostgreSQL, Drizzle ORM, Clerk authentication, and WebSocket support.
+Bun-based backend server with PostgreSQL, Drizzle ORM, Better Auth authentication, and WebSocket support.
 
 ## Setup
 
@@ -14,9 +14,9 @@ Bun-based backend server with PostgreSQL, Drizzle ORM, Clerk authentication, and
    # Database
    DATABASE_URL=postgres://user:password@localhost:5432/chat_thing
    
-   # Clerk Authentication
-   CLERK_JWT_KEY=your_clerk_jwt_verification_key_here
-   CLERK_AUTHORIZED_PARTIES=your_app_id_1,your_app_id_2
+   # Better Auth
+   BETTER_AUTH_SECRET=your_better_auth_secret
+   BETTER_AUTH_URL=http://localhost:3000
    
    # Server
    PORT=3000
@@ -60,15 +60,9 @@ The server will run on `http://localhost:3000` (or the port specified in `PORT`)
 
 Connect to `ws://localhost:3000/ws` and send JSON messages:
 
-1. **Authenticate** (first message required):
-   ```json
-   {
-     "type": "auth",
-     "token": "<clerk_jwt_token>"
-   }
-   ```
+Authentication is cookie-based (Better Auth session). Ensure the client holds valid auth cookies before connecting. No token message is required.
 
-2. **Subscribe to channel**:
+1. **Subscribe to channel**:
    ```json
    {
      "type": "subscribe",
@@ -76,7 +70,7 @@ Connect to `ws://localhost:3000/ws` and send JSON messages:
    }
    ```
 
-3. **Create message**:
+2. **Create message**:
    ```json
    {
      "type": "message:create",
@@ -85,7 +79,7 @@ Connect to `ws://localhost:3000/ws` and send JSON messages:
    }
    ```
 
-4. **Unsubscribe from channel**:
+3. **Unsubscribe from channel**:
    ```json
    {
      "type": "unsubscribe",
