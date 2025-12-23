@@ -5,7 +5,7 @@
 - **Framework:** React
 - **Routing:** Wouter (using hash routing for Electron)
 - **Styling:** SCSS with Tailwind base primitives
-- **Auth:** Clerk
+- **Auth:** Better Auth
 - **Bundler/Dev Server:** Vite
 - **Package Manager:** Bun
 - **Desktop Build:** Electron (React served locally via `index.html#/…`)
@@ -19,7 +19,7 @@
 - **Framework:** **Express**
 - **API Layer:** **GraphQL** (Apollo Server or Yoga)
 - **Real‑time:** WebSockets (`graphql-ws` for GraphQL Subscriptions)
-- **Auth Integration:** Clerk SDK → JWT/session middleware
+- **Auth Integration:** Better Auth → cookie-based session middleware
 - **DB:** Postgres
 - **DB Host:** **Railway**
 - **Backend Hosting:** **Railway**

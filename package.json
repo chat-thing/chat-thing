@@ -5,7 +5,8 @@
   "workspaces": [
     "packages/*",
     "web-frontend",
-    "electron"
+    "electron",
+    "backend"
   ],
   "scripts": {
     "dev:web": "cd web-frontend && bun run dev",
