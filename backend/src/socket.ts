@@ -148,10 +148,10 @@ async function handleWebSocketMessage(
 export const websocketHandlers = {
   message: handleWebSocketMessage,
   open(socket: ServerWebSocket<WebSocketData>) {
-    socket.data = {
-      authContext: null,
-      subscribedChannels: new Set(),
-    };
+    // Preserve authContext set during upgrade; only ensure subscribedChannels exists
+    if (!socket.data.subscribedChannels) {
+      socket.data.subscribedChannels = new Set();
+    }
   },
   close(socket: ServerWebSocket<WebSocketData>) {
     // Unsubscribe from all channels
