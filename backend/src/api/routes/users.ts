@@ -27,7 +27,7 @@ const getMe: RouteHandler = async (request, authContext) => {
 
   return jsonResponse({
     userId: user.userId.toString(),
-    clerkUserId: user.authId,
+    authId: user.authId,
     username: user.username,
     displayName: user.displayName,
   });

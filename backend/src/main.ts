@@ -22,18 +22,24 @@ const server = Bun.serve({
       return auth.handler(request);
     }
 
-    // WebSocket upgrade
+    // WebSocket upgrade with Better Auth session
     if (url.pathname === "/ws") {
-      const upgraded = server.upgrade(request, {
-        data: {
-          authContext: null,
-          subscribedChannels: new Set(),
-        },
-      });
-      if (!upgraded) {
-        return new Response("WebSocket upgrade failed", { status: 400 });
+      try {
+        const { requireAuth } = await import("./auth/requireAuth");
+        const authContext = await requireAuth(request);
+        const upgraded = server.upgrade(request, {
+          data: {
+            authContext,
+            subscribedChannels: new Set(),
+          },
+        });
+        if (!upgraded) {
+          return new Response("WebSocket upgrade failed", { status: 400 });
+        }
+        return; // Response handled by WebSocket
+      } catch {
+        return new Response("Unauthorized", { status: 401 });
       }
-      return; // Response handled by WebSocket
     }
 
     // HTTP routes

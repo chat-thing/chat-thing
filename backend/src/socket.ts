@@ -1,5 +1,5 @@
 import type { ServerWebSocket } from "bun";
-import { requireAuth, type AuthContext } from "./auth/requireAuth";
+import type { AuthContext } from "./auth/requireAuth";
 import { db } from "./db/client";
 import { messages, users } from "./db/schema";
 import { eq } from "drizzle-orm";
@@ -11,7 +11,6 @@ interface WebSocketData {
 
 interface WebSocketMessage {
   type: string;
-  token?: string;
   channelId?: number;
   content?: string;
 }
@@ -67,25 +66,8 @@ async function handleWebSocketMessage(
     return;
   }
 
-  // Handle auth message (must be first)
-  if (parsed.type === "auth") {
-    if (!parsed.token) {
-      socket.send(JSON.stringify({ type: "error", message: "Token required" }));
-      socket.close();
-      return;
-    }
-
-    const authContext = await verifyAuthToken(parsed.token);
-    if (!authContext) {
-      socket.send(JSON.stringify({ type: "error", message: "Invalid token" }));
-      socket.close();
-      return;
-    }
-
-    socket.data.authContext = authContext;
-    socket.send(JSON.stringify({ type: "auth:success" }));
-    return;
-  }
+  // No runtime auth via message; authentication is established during upgrade
+  // and stored on socket.data.authContext
 
   // All other messages require auth
   if (!socket.data.authContext) {
@@ -125,7 +107,7 @@ async function handleWebSocketMessage(
 
     // Get user by auth_id
     const user = await db.query.users.findFirst({
-      where: eq(users.authId, socket.data.authContext!.clerkUserId),
+      where: eq(users.authId, socket.data.authContext!.userId),
     });
 
     if (!user) {

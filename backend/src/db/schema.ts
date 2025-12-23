@@ -9,7 +9,7 @@ export const users = pgTable("users", {
   bio: text("user_bio"),
   pronouns: text("user_pronouns"),
   avatarUrl: text("user_avatar_url"),
-  authId: text("user_auth_id").notNull().unique(), // Clerk user ID
+  authId: text("user_auth_id").notNull().unique(), // Auth provider user ID (Better Auth)
   isPlural: boolean("user_is_plural").default(false),
   createdAt: timestamp("user_created_at", { withTimezone: true }).defaultNow(),
 }, (table) => ({

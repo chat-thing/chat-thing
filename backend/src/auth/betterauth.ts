@@ -15,4 +15,16 @@ export const auth = betterAuth({
 	},
 });
 
+// Wrapper: get session from request headers (typed outward, internal API may vary)
+export async function getSessionFromHeaders(
+	headers: Headers,
+): Promise<{ userId?: string } | null> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const anyAuth = auth as any;
+	if (anyAuth?.api?.getSession) {
+		return anyAuth.api.getSession({ headers });
+	}
+	return null;
+}
+
 
