@@ -2,7 +2,7 @@
 
 A monorepo containing the Electron app, Web app, and Backend for the Chat Thing project.
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 chat-thing/
@@ -14,7 +14,7 @@ chat-thing/
 └── package.json              # Root workspace configuration
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Installation
 
@@ -37,7 +37,7 @@ bun run dev:electron
 bun run dev:backend
 ```
 
-## 📚 Packages
+## Packages
 
 ### @chat-thing/ui
 
@@ -59,7 +59,7 @@ bunx shadcn@latest add [component-name]
 # Then export it in packages/ui/src/index.ts
 ```
 
-## 🔧 Workspace Configuration
+## Workspace Configuration
 
 This monorepo uses Bun workspaces. The workspace packages are automatically linked, so changes to `@chat-thing/ui` are immediately available in all consuming applications without needing to rebuild or reinstall.
 
@@ -77,13 +77,13 @@ In your app's `package.json`:
 
 Then run `bun install` from the root directory.
 
-## 📝 Notes
+## Notes
 
 - The `@chat-thing/ui` package uses Tailwind CSS, so consuming apps need Tailwind configured
 - React and React DOM are peer dependencies of the UI package
 - All shadcn components are exported from the main entry point of `@chat-thing/ui`
 
-## 🛠 Development
+##  Development
 
 ### Adding a new workspace package
 
